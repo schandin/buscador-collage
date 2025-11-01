@@ -1,20 +1,19 @@
-// Archivo: script.js (¡VERSIÓN FINAL CON EXCLUSIÓN!)
+// Archivo: script.js (¡VERSIÓN FINAL CORREGIDA!)
 document.addEventListener('DOMContentLoaded', () => {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const loader = document.getElementById('loader');
     const resultsContainer = document.getElementById('results-container');
     const loadMoreButton = document.getElementById('load-more-btn');
 
-    // ¡¡¡CAMBIO CLAVE AQUÍ!!!
-    // Añadimos "-college" a todas las búsquedas para excluir resultados no deseados.
+    // ¡¡¡LÓGICA DE BÚSQUEDA CORREGIDA CON PARÉNTESIS!!!
     const searchTerms = {
-        todos: '"arte collage" -college',
-        concursos: '"convocatoria collage" OR "collage contest" OR "open call collage" -college',
-        exposiciones: '"exposición collage" OR "collage exhibition" -college',
-        charlas: '"charla collage" OR "collage artist talk" -college',
-        cursos: '"curso collage" OR "taller collage" OR "collage workshop" -college',
-        historia: '"historia del collage" OR "history of collage" -college',
-        articulos: '"blog de collage" OR "collage artist feature" -college'
+        todos: '("arte collage") -college',
+        concursos: '("convocatoria collage" OR "collage contest" OR "open call collage") -college',
+        exposiciones: '("exposición collage" OR "collage exhibition") -college',
+        charlas: '("charla collage" OR "collage artist talk") -college',
+        cursos: '("curso collage" OR "taller collage" OR "collage workshop") -college',
+        historia: '("historia del collage" OR "history of collage") -college',
+        articulos: '("blog de collage" OR "collage artist feature") -college'
     };
 
     let currentFilter = 'todos';
@@ -113,10 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ### **Qué hacer ahora:**
 
-1.  **Actualiza el `script.js` en GitHub** con este nuevo código.
-2.  Espera un minuto a que Netlify actualice tu sitio.
-3.  **Refresca la página y prueba de nuevo.**
+1.  **Actualiza el `script.js` en GitHub** con este nuevo código corregido.
+2.  Espera un minuto a que Netlify se actualice automáticamente.
+3.  **Refresca la página del buscador** y prueba de nuevo.
 
-Ahora, cuando realices una búsqueda, los resultados sobre "College of the Canyons" y otros institutos educativos deberían desaparecer, dándote un listado mucho más limpio y relevante para el mundo del arte del collage.
-
-Con este ajuste, la calidad de tus resultados mejorará drásticamente. ¡Avísame cuando lo hayas subido
+Ahora la búsqueda debería volver a funcionar, trayendo los resultados correctos y excluyendo la palabra "college" de forma mucho más fiable. Lamento sinceramente el paso en falso.
