@@ -1,33 +1,27 @@
-// Archivo: netlify/functions/search.js
+// Archivo: netlify/functions/search.js (¡ACTUALIZADO!)
 
 exports.handler = async function(event) {
-    // Obtenemos las claves secretas de las variables de entorno de Netlify
     const API_KEY = process.env.GOOGLE_API_KEY;
     const CX_ID = process.env.GOOGLE_CX_ID;
 
-    // Obtenemos los términos de búsqueda que nos envía el frontend
     const requestBody = JSON.parse(event.body);
     const query = requestBody.query;
-    const lang = requestBody.lang || 'es'; // Lenguaje por defecto español
+    // NUEVO: Aceptamos el índice de inicio para la paginación
+    const startIndex = requestBody.start || 1;
 
-    // Construimos la URL para la API de Google
-    const url = `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${CX_ID}&q=${encodeURIComponent(query)}&hl=${lang}`;
+    // NUEVO: Añadimos los parámetros "sort=date" y "start"
+    const url = `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${CX_ID}&q=${encodeURIComponent(query)}&sort=date&start=${startIndex}`;
 
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            // Si Google da un error, lo devolvemos
             const errorData = await response.json();
-            return {
-                statusCode: response.status,
-                body: JSON.stringify({ error: errorData.error.message })
-            };
+            return { statusCode: response.status, body: JSON.stringify({ error: errorData.error.message }) };
         }
         
         const data = await response.json();
         const items = data.items || [];
 
-        // Limpiamos los resultados antes de devolverlos
         const results = items.map(item => ({
             title: item.title,
             link: item.link,
@@ -41,9 +35,6 @@ exports.handler = async function(event) {
         };
 
     } catch (error) {
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ error: 'Hubo un error al conectar con la API de Google.' })
-        };
+        return { statusCode: 500, body: JSON.stringify({ error: 'Hubo un error al conectar con la API de Google.' }) };
     }
 };
