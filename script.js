@@ -1,18 +1,20 @@
-// Archivo: script.js (¡ACTUALIZADO!)
+// Archivo: script.js (¡VERSIÓN FINAL CON EXCLUSIÓN!)
 document.addEventListener('DOMContentLoaded', () => {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const loader = document.getElementById('loader');
     const resultsContainer = document.getElementById('results-container');
     const loadMoreButton = document.getElementById('load-more-btn');
 
+    // ¡¡¡CAMBIO CLAVE AQUÍ!!!
+    // Añadimos "-college" a todas las búsquedas para excluir resultados no deseados.
     const searchTerms = {
-        todos: 'collage art',
-        concursos: 'convocatoria collage OR "collage contest" OR "open call collage"',
-        exposiciones: 'exposición collage OR "collage exhibition"',
-        charlas: 'charla collage OR "collage artist talk"',
-        cursos: 'curso collage OR taller collage OR "collage workshop"',
-        historia: 'historia del collage OR "history of collage"',
-        articulos: 'blog collage OR "collage artist feature"'
+        todos: '"arte collage" -college',
+        concursos: '"convocatoria collage" OR "collage contest" OR "open call collage" -college',
+        exposiciones: '"exposición collage" OR "collage exhibition" -college',
+        charlas: '"charla collage" OR "collage artist talk" -college',
+        cursos: '"curso collage" OR "taller collage" OR "collage workshop" -college',
+        historia: '"historia del collage" OR "history of collage" -college',
+        articulos: '"blog de collage" OR "collage artist feature" -college'
     };
 
     let currentFilter = 'todos';
@@ -50,6 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (results.length === 10) { // Si vinieron 10, es probable que haya más
                 nextStartIndex += 10;
                 loadMoreButton.classList.remove('hidden');
+            } else {
+                // Si vinieron menos de 10, significa que no hay más páginas
+                loadMoreButton.classList.add('hidden');
             }
 
         } catch (error) {
@@ -80,6 +85,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Usamos += para añadir resultados en lugar de reemplazar
             resultsContainer.innerHTML += card;
         });
+        
+        // Mensaje final si ya no hay más resultados
+        if (results.length < 10 && nextStartIndex > 1) {
+             resultsContainer.innerHTML += '<p>No hay más resultados que mostrar.</p>';
+        }
     }
 
     // Manejar clics en los botones de filtro
@@ -99,4 +109,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Carga inicial de "Todos"
     performSearch('todos');
-});
+});```
+
+### **Qué hacer ahora:**
+
+1.  **Actualiza el `script.js` en GitHub** con este nuevo código.
+2.  Espera un minuto a que Netlify actualice tu sitio.
+3.  **Refresca la página y prueba de nuevo.**
+
+Ahora, cuando realices una búsqueda, los resultados sobre "College of the Canyons" y otros institutos educativos deberían desaparecer, dándote un listado mucho más limpio y relevante para el mundo del arte del collage.
+
+Con este ajuste, la calidad de tus resultados mejorará drásticamente. ¡Avísame cuando lo hayas subido
