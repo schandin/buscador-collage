@@ -1,0 +1,33 @@
+<!-- Archivo: index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Eventos de Collage</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="event-finder-container">
+        <header>
+            <h2>Buscador de Eventos de Collage</h2>
+            <p>Encuentra las últimas convocatorias, exposiciones y noticias del mundo del collage.</p>
+        </header>
+        <div class="filters">
+            <button class="filter-btn active" data-filter="todos"><i class="fa-solid fa-grip"></i> Todos</button>
+            <button class="filter-btn" data-filter="concursos"><i class="fa-solid fa-trophy"></i> Concursos</button>
+            <button class="filter-btn" data-filter="exposiciones"><i class="fa-solid fa-images"></i> Exposiciones</button>
+            <button class="filter-btn" data-filter="charlas"><i class="fa-solid fa-comments"></i> Charlas</button>
+            <button class="filter-btn" data-filter="cursos"><i class="fa-solid fa-graduation-cap"></i> Cursos</button>
+            <button class="filter-btn" data-filter="historia"><i class="fa-solid fa-book-open"></i> Historia</button>
+            <button class="filter-btn" data-filter="articulos"><i class="fa-solid fa-newspaper"></i> Artículos</button>
+        </div>
+        <div class="results-area">
+            <div id="loader" class="hidden">Cargando...</div>
+            <div id="results-container"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
