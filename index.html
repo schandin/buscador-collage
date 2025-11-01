@@ -1,4 +1,4 @@
-<!-- Archivo: index.html -->
+<!-- Archivo: index.html (¡ACTUALIZADO!) -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,6 +14,7 @@
             <h2>Buscador de Eventos de Collage</h2>
             <p>Encuentra las últimas convocatorias, exposiciones y noticias del mundo del collage.</p>
         </header>
+
         <div class="filters">
             <button class="filter-btn active" data-filter="todos"><i class="fa-solid fa-grip"></i> Todos</button>
             <button class="filter-btn" data-filter="concursos"><i class="fa-solid fa-trophy"></i> Concursos</button>
@@ -23,11 +24,15 @@
             <button class="filter-btn" data-filter="historia"><i class="fa-solid fa-book-open"></i> Historia</button>
             <button class="filter-btn" data-filter="articulos"><i class="fa-solid fa-newspaper"></i> Artículos</button>
         </div>
+        
         <div class="results-area">
             <div id="loader" class="hidden">Cargando...</div>
             <div id="results-container"></div>
+            <!-- NUEVO: Botón para cargar más resultados -->
+            <button id="load-more-btn" class="hidden">Cargar más</button>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
