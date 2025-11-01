@@ -1,8 +1,9 @@
-// Archivo: script.js
+// Archivo: script.js (¡ACTUALIZADO!)
 document.addEventListener('DOMContentLoaded', () => {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const loader = document.getElementById('loader');
     const resultsContainer = document.getElementById('results-container');
+    const loadMoreButton = document.getElementById('load-more-btn');
 
     const searchTerms = {
         todos: 'collage art',
@@ -15,17 +16,26 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let currentFilter = 'todos';
+    let nextStartIndex = 1; // Para rastrear la paginación
 
     // Función para buscar en nuestro backend
-    async function performSearch(filter) {
+    async function performSearch(filter, isLoadMore = false) {
+        if (!isLoadMore) {
+            nextStartIndex = 1; // Reseteamos si es una búsqueda nueva
+            resultsContainer.innerHTML = '';
+        }
+        
         loader.classList.remove('hidden');
-        resultsContainer.innerHTML = '';
+        loadMoreButton.classList.add('hidden');
         const query = searchTerms[filter];
 
         try {
             const response = await fetch('/.netlify/functions/search', {
                 method: 'POST',
-                body: JSON.stringify({ query: query })
+                body: JSON.stringify({ 
+                    query: query,
+                    start: nextStartIndex // Enviamos el índice de inicio
+                })
             });
 
             if (!response.ok) {
@@ -36,8 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const results = await response.json();
             displayResults(results);
 
+            // Preparamos el índice para la próxima carga
+            if (results.length === 10) { // Si vinieron 10, es probable que haya más
+                nextStartIndex += 10;
+                loadMoreButton.classList.remove('hidden');
+            }
+
         } catch (error) {
-            resultsContainer.innerHTML = `<p>Error: ${error.message}</p>`;
+            resultsContainer.innerHTML += `<p>Error: ${error.message}</p>`;
         } finally {
             loader.classList.add('hidden');
         }
@@ -45,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para mostrar los resultados
     function displayResults(results) {
-        if (results.length === 0) {
+        if (nextStartIndex === 1 && results.length === 0) {
             resultsContainer.innerHTML = '<p>No se encontraron resultados para esta categoría.</p>';
             return;
         }
@@ -61,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             `;
+            // Usamos += para añadir resultados en lugar de reemplazar
             resultsContainer.innerHTML += card;
         });
     }
@@ -71,8 +88,13 @@ document.addEventListener('DOMContentLoaded', () => {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             currentFilter = button.dataset.filter;
-            performSearch(currentFilter);
+            performSearch(currentFilter); // Es una búsqueda nueva
         });
+    });
+
+    // Manejar clic en "Cargar más"
+    loadMoreButton.addEventListener('click', () => {
+        performSearch(currentFilter, true); // Es una carga de más resultados
     });
 
     // Carga inicial de "Todos"
