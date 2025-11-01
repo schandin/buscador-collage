@@ -1,4 +1,4 @@
-/* Archivo: style.css (¡VERSIÓN MEJORADA!) */
+/* Archivo: style.css (¡VERSIÓN FINAL CON BOTONERA VISIBLE!) */
 
 /* --- Estilos Globales y Tipografía --- */
 body {
@@ -34,35 +34,22 @@ header p {
     font-size: 1.1em;
 }
 
-/* --- NUEVO: Scroll horizontal en móviles para la botonera --- */
-.filters-wrapper {
-    overflow-x: auto; /* Habilita el scroll horizontal */
-    padding-bottom: 15px; /* Espacio para la barra de scroll (que ocultaremos) */
-    -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
-}
-/* Ocultamos la barra de scroll en navegadores compatibles */
-.filters-wrapper::-webkit-scrollbar {
-    display: none;
-}
+/* --- CONTENEDOR DE FILTROS --- */
+/* (Quitamos el wrapper, ya no es necesario) */
+
+/* --- BOTONERA --- */
 .filters {
     display: flex;
-    flex-wrap: nowrap; /* Evita que los botones salten de línea */
-    white-space: nowrap; /* Mantiene todo en una sola línea */
+    /* La clave está aquí: permitimos que los botones salten de línea */
+    flex-wrap: wrap;
+    /* Centramos los botones para que se vea ordenado */
+    justify-content: center;
     gap: 12px;
     margin-bottom: 25px;
 }
-/* En pantallas grandes, volvemos al centrado normal */
-@media (min-width: 768px) {
-    .filters-wrapper {
-        overflow-x: visible;
-    }
-    .filters {
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-}
 
-/* --- MEJORA: Diseño de los botones de filtro --- */
+
+/* --- Diseño de los botones de filtro (mejorado) --- */
 .filter-btn {
     display: inline-flex;
     align-items: center;
@@ -97,7 +84,7 @@ header p {
 }
 
 
-/* --- MEJORA: Diseño de la zona de resultados --- */
+/* --- Diseño de la zona de resultados (mejorado) --- */
 #loader {
     text-align: center;
     padding: 50px;
